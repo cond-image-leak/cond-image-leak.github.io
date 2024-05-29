@@ -1,1 +1,543 @@
-hello
+<!DOCTYPE html>
+<html>
+
+<!-- S head -->
+<!-- <head>：这是 <html> 元素内的子元素，用于包含文档的元数据，比如字符编码声明、标题和外部样式表等。通常不会在网页中直接显示。-->
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ControlVideo, a novel method for text-driven video-editing.">
+  <meta name="keywords" content="ControlVideo, diffusion models, ControlNet, fine-tuning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identifying and Solving Conditional Image Leakage in Image-to-Video Generation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    .video-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px; /* Space between videos */
+      margin: 0;
+      padding: 0;
+    }
+    .video-item,.image-item{
+      height: auto; /* Set the height for both videos */
+      width: auto;
+      max-width: 100%; /* Ensure the video can scale down */
+      margin: 0;
+      padding: 0;
+    }
+    video, img {
+      height: auto; /* Video height to match the container */
+      width: auto; /* Video width to maintain aspect ratio */
+    }
+    .text-container {
+      text-align: center; /* Center the text */
+      width: 100%; /* Full width of the parent container */
+      margin: 0;
+      padding: 0;
+    }
+    .title-container {
+      position: relative; /* Relative positioning for absolute child elements */
+      top: 50%; /* Center the title vertically */
+      transform: translateY(-50%); /* Center the title horizontally */
+      margin: 0;
+    }
+    .title-container h2 {
+      margin: 0; /* Remove default margin */
+      font-size: 1.5em; /* Set font size */
+      color: #333; /* Set text color */
+    } 
+  </style>
+
+</head>
+<!-- E head -->
+
+<!-- S body 网页主体 -->
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <!-- 标题 -->
+          <h1 class="title is-1 publication-title">Identifying and Solving Conditional Image Leakage in Image-to-Video Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Anonymous Author(s)
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Affiliation<br>
+            Address<br>
+            email</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- S 摘要 & Video-->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+              Diffusion models have obtained substantial progress in image-to-video (I2V) generation. However, such models are not fully understood. In this paper, we report a significant but previously overlooked issue in I2V diffusion models (I2V-DMs), namely, conditional image leakage. I2V-DMs tend to over-rely on the conditional image at large time steps, neglecting the crucial task of predicting the clean video from noisy inputs, which results in videos lacking dynamic and vivid motion. We further address this challenge from both inference and training aspects by presenting plug-and-play strategies accordingly. First, we introduce a training-free inference strategy that starts the generation process from an earlier time step to avoid the unreliable late-time steps of I2V-DMs, as well as an initial noise distribution with optimal analytic expressions (Analytic-Init) by minimizing the KL divergence between it and the actual marginal distribution to effectively bridge the training-inference gap. Second, to mitigate conditional image leakage during training, we design a time-dependent noise distribution for the conditional image, which favors high noise levels at large time steps to sufficiently interfere with the conditional image. We validate these strategies on various I2V-DMs using our collected open-domain image benchmark and the UCF101 dataset. Extensive results demonstrate that our methods outperform baselines by producing videos with more dynamic and natural motion without compromising image alignment and temporal consistency.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!--/ Abstract. -->
+
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Conditional Image Leakage</h2>
+          <div class="custom-image">
+            <img src="static/img/image.png" alt="Our method.">
+          </div>
+        <div class="content has-text-justified">
+          <p>
+            Ideally, I2V-DMs predict clean videos
+            from noisy inputs, using the conditional image as auxiliary content guidance. However, at large time
+            steps, the heavily corrupted input retains minimal video detail, causing the model tends to over-rely
+            on the detailed conditional image and neglect the crucial task of synthesizing video from noisy inputs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- X_0 prediction -->
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="title-container">
+      <h2 class="title is-3">Identifying Conditional Image Leakage in I2V-DMs</h2>
+    </div>
+  </div>
+  <div class="video-container">
+    <div class="image-item">
+      <div class="text-container"><b>Conditional Image</b></div>
+      <img src="static/videos/project_page_part1/concat/img.png" alt="Image">
+      
+    </div>
+    <div class="video-item">
+      <div class="text-container"><b>Ground Truth Video</b></div>
+      <video controls autoplay muted loop playsinline>
+        <source src="static/videos/project_page_part1/concat/gt.mp4" type="video/mp4">
+      </video>
+      
+    </div>
+    <div class="video-item">
+      <div class="text-container"><b>X<sub>0</sub> Prediction of DynamiCrafter</b></div>
+      <video controls autoplay muted loop playsinline>
+        <source src="static/videos/project_page_part1/concat/baseline.mp4" type="video/mp4">
+      </video>
+      <div class="text-container"><b>&nbsp;&nbsp;&nbsp;M=0.7T&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=0.95T &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=T</b> </div>
+      <p class="caption">
+        <b><span class="red-word">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&asymp;GT motion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< GT motion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<< GT motion</span></b>
+      </p>
+    </div>
+  </div>
+
+
+
+
+  <div class="video-container">
+    <div class="image-item">
+      <div class="text-container"><b>Conditional Image</b></div>
+      <img src="static/videos/project_page_part1/concat/img.png" alt="Image">
+      
+    </div>
+    <div class="video-item">
+      <div class="text-container"><b>Ground Truth Video</b></div>
+      <video controls autoplay muted loop playsinline>
+        <source src="static/videos/project_page_part1/concat/gt.mp4" type="video/mp4">
+      </video>
+      
+    </div>
+    <div class="video-item">
+      <div class="text-container"><b>X<sub>0</sub> Prediction of Finetuend DynamiCrafter Using Our TimeNoise</div>
+      <video controls autoplay muted loop playsinline>
+        <source src="static/videos/project_page_part1/concat/ours.mp4" type="video/mp4">
+      </video>
+      <div class="text-container"><b>&nbsp;&nbsp;&nbsp;M=0.7T&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=0.95T &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=T</b> </div>
+      <p class="caption">
+        <b><span class="red-word">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&asymp;GT motion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&asymp; GT motion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&asymp; GT motion</span></b>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- Inference & Training Strategies -->
+<section class="hero is-light is-small">
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Inference Strategy</h2>
+      <br>
+      <br>
+    </div>
+
+
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DynamiCrafter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
+          
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/DC/original/55_sample0.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+        
+        <div class="video-container">
+          
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/DC/original/15_sample0.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/DC/original/35_sample0.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+
+        </div>
+        <br>
+        <br>
+
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VideoCrafter1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/VC/original/13.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/VC/original/64.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/VC/original/A fawn Pembroke Welsh Corgi walking in slow-motion in Times Square, in cubist painting style..mp4" type="video/mp4">
+            </video>
+            
+          </div>
+
+        </div>
+    
+        <br>
+        <br>
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SVD  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/SVD/original/3.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+        
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/SVD/original/43.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/SVD/original/65.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+
+        </div>
+    
+
+        <br>
+        <br>
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  DynamiCrafter-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/DC/baseline/14_sample0.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/DC/baseline/30_sample0.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+        
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/DC/baseline/52_sample0.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+
+    
+        <br>
+        <br>
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VideoCrafter1-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/VC/baseline/5.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/VC/baseline/18.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+        
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/VC/baseline/47.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+    
+        <br>
+        <br>
+
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; SVD-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/SVD/baseline/demo.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+        
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/SVD/baseline/A girl with long curly blonde hair and sunglasses, camera pan from left to right.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/SVD/baseline/A panda wearing sunglasses walking in slow-motion under water, in photorealistic style.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+
+        </div>
+    
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Training Strategy</h2>
+      <br>
+      <br>
+    </div>
+
+
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DynamiCrafter-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Training Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/DC/train/7_sample0.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/DC/train/32_sample0.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+        
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/DC/train/41_sample0.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+
+        <br>
+        <br>
+
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VideoCrafter1-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Training Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/VC/train/25.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/VC/train/29.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+        
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/VC/train/36.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        </div>
+        <br>
+        <br>
+    
+
+          <!-- 4 DEMOs --> 
+          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; SVD-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Training Strategy</h2>
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/SVD/train/4.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+          </div>
+
+          <div class="video-container">
+            <div class="video-item">
+              <video controls autoplay muted loop playsinline>
+                <source src="static/videos/project_page_part2/SVD/train/11.mp4" type="video/mp4">
+              </video>
+              
+            </div>
+
+          </div>
+
+        <div class="video-container">
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part2/SVD/train/46.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+
+        </div>
+    </div>
+  </section>
+</section>
+
+
+</body>
+<!-- E body 网页主体 -->
+
+</html>
