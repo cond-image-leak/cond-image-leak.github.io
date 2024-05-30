@@ -139,7 +139,7 @@ body {
   margin: 0;
 }
 
-#results-carousel .item .caption {
+.caption {
   font-family: 'Segoe Print', sans-serif; /* 设置标题字体 */
   font-weight: bold; /* 加粗字体 */
   font-size: 18px; /* 设置标题字号 */
