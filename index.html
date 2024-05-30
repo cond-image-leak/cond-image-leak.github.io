@@ -50,7 +50,13 @@
       gap: 10px; /* Space between videos */
       margin: 0;
       padding: 0;
+      text-align: center; 
     }
+    .container {
+      width: 75%; /* 设置总宽度为屏幕宽度的60% */
+      margin: 0 auto; /* 自动居中 */
+    }
+
     .video-item,.image-item{
       height: auto; /* Set the height for both videos */
       width: auto;
@@ -63,11 +69,63 @@
       width: auto; /* Video width to maintain aspect ratio */
     }
     .text-container {
-      text-align: center; /* Center the text */
-      width: 100%; /* Full width of the parent container */
-      margin: 0;
-      padding: 0;
+      position: relative;
+      width: 100%;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;  /* 水平居中 */
+      align-items: center;  /* 垂直居中 */
+      padding: 0 10%; 
+      font-size: 20px;  /*---------------------------X0 - pre 字体 */
+      white-space: nowrap; 
+      gap: 20px; /* 子元素之间的间距 */
     }
+    .label-top {
+      position: absolute;
+      top: 0; /* 设置为顶部 */
+      font-size: 24px; /* 设置文字大小为20像素---------------------- */
+      transform: translateY(-100%); /* 将标签移动到视频上方 */
+      white-space: nowrap; /* 阻止文本换行 */
+    }
+    .label-top-left { left: 17%; transform: translate(-50%, -100%); }
+    .label-top-middle { left: 50%; transform: translate(-50%, -100%); }
+    .label-top-right { left: 83%; transform: translate(-50%, -100%); }
+
+    .label-top0 {
+      position: absolute;
+      top: 0; /* 设置为顶部 */
+      font-size: 17px; /* 设置文字大小为20像素---------------------- */
+      transform: translateY(-100%); /* 将标签移动到视频上方 */
+      white-space: nowrap; /* 阻止文本换行 */
+    }
+    .label-top0-x0-left { left: 10%; transform: translate(-50%, -100%); }
+    .label-top0-x0-middle { left: 30%; transform: translate(-50%, -100%); }
+    .label-top0-x0-right { left: 70%; transform: translate(-50%, -100%); }
+
+    .label-bottom {
+        position: absolute;
+        bottom: 0;
+        font-size: 20px; /* 更大的字体大小 ------------------------------------------*/
+        white-space: nowrap; /* 阻止文本换行 */
+    }
+    .label-bottom-left { left: 25%; transform: translate(-50%, 100%); }
+    .label-bottom-middle { left: 50%; transform: translate(-50%, 100%); }
+    .label-bottom-right { left: 75%; transform: translate(-50%, 100%); }
+
+    .label-bottom0 {
+        position: absolute;
+        bottom: 0;
+        font-size: 17px; /* 更大的字体大小 ------------------------------------------*/
+        white-space: nowrap; /* 阻止文本换行 */
+    }
+    .label-bottom0-left1 { left: 50%; transform: translate(-50%, 100%); }
+    .label-bottom0-middle1 { left: 70%; transform: translate(-50%, 100%); }
+    .label-bottom0-right1 { left: 90%; transform: translate(-50%, 100%); }
+
+    .label-bottom0-left2 { left: 50%; transform: translate(-50%, 200%); }
+    .label-bottom0-middle2 { left: 70%; transform: translate(-50%, 200%); }
+    .label-bottom0-right2 { left: 90%; transform: translate(-50%, 200%); }
+
     .title-container {
       position: relative; /* Relative positioning for absolute child elements */
       top: 50%; /* Center the title vertically */
@@ -148,69 +206,83 @@
 </section>
 
 
-
-<!-- X_0 prediction -->
 <section class="section">
   <div class="columns is-centered has-text-centered">
-    <div class="title-container">
-      <h2 class="title is-3">Identifying Conditional Image Leakage in I2V-DMs</h2>
-    </div>
-  </div>
-  <div class="video-container">
-    <div class="image-item">
-      <div class="text-container"><b>Conditional Image</b></div>
-      <img src="static/videos/project_page_part1/concat/img.png" alt="Image">
-      
-    </div>
-    <div class="video-item">
-      <div class="text-container"><b>Ground Truth Video</b></div>
-      <video controls autoplay muted loop playsinline>
-        <source src="static/videos/project_page_part1/concat/gt.mp4" type="video/mp4">
-      </video>
-      
-    </div>
-    <div class="video-item">
-      <div class="text-container"><b>X<sub>0</sub> Prediction of DynamiCrafter</b></div>
-      <video controls autoplay muted loop playsinline>
-        <source src="static/videos/project_page_part1/concat/baseline.mp4" type="video/mp4">
-      </video>
-      <div class="text-container"><b>&nbsp;&nbsp;&nbsp;M=0.7T&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=0.95T &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=T</b> </div>
-      <p class="caption">
-        <b><span class="red-word">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&asymp;GT motion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< GT motion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<< GT motion</span></b>
-      </p>
-    </div>
+    <h2 class="title is-3">Identifying Conditional Image Leakage in I2V-DMs</h2>
+    <br>
+    <br>
+    <br>
+    <br>
   </div>
 
+        <div class="video-container container">
+          <div class="image-item">
+            <img src="static/videos/project_page_part1/concat/img.png" alt="Image">
+            
+          </div>
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part1/concat/gt.mp4" type="video/mp4">
+            </video>
+            
+          </div>
+        
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part1/concat/baseline.mp4" type="video/mp4">
+            </video>
+            <span class="label-top0 label-top0-x0-left"><b>Conditional Image</b></span>
+            <span class="label-top0 label-top0-x0-middle"><b>Ground Truth Video</b></span>
+            <span class="label-top0 label-top0-x0-right"><b>X<sub>0</sub> Prediction of DynamiCrafter</b></span>
+            <span class="label-bottom0 label-bottom0-left1"><b>M=0.7T</b></span>
+            <span class="label-bottom0 label-bottom0-middle1"><b>M=0.95T</b></span>
+            <span class="label-bottom0 label-bottom0-right1"><b>M=T</b></span>
+            <span class="label-bottom0 label-bottom0-left2"><b><span class="red-word">&asymp; GT motion</span></b></span>
+            <span class="label-bottom0 label-bottom0-middle2"><b><span class="red-word">< GT motion</span></b></span>
+            <span class="label-bottom0 label-bottom0-right2"><b><span class="red-word"><< GT motion</span></b></span>
+          </div>
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="video-container container">
+          <div class="image-item">
+            <img src="static/videos/project_page_part1/concat/img.png" alt="Image">
+            
+          </div>
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part1/concat/gt.mp4" type="video/mp4">
+            </video>
+
+          </div>
+        
+          <div class="video-item">
+            <video controls autoplay muted loop playsinline>
+              <source src="static/videos/project_page_part1/concat/ours.mp4" type="video/mp4">
+            </video>
+              <span class="label-top0 label-top0-x0-left"><b>Conditional Image</b></span>
+              <span class="label-top0 label-top0-x0-middle"><b>Ground Truth Video</b></span>
+              <span class="label-top0 label-top0-x0-right"><b>X<sub>0</sub> Prediction of Finetuend DynamiCrafter Using Our TimeNoise</b></span>
+              <span class="label-bottom0 label-bottom0-left1"><b>M=0.7T</b></span>
+              <span class="label-bottom0 label-bottom0-middle1"><b>M=0.95T</b></span>
+              <span class="label-bottom0 label-bottom0-right1"><b>M=T</b></span>
+              <span class="label-bottom0 label-bottom0-left2"><b><span class="red-word">&asymp; GT motion</span></b></span>
+              <span class="label-bottom0 label-bottom0-middle2"><b><span class="red-word">&asymp; GT motion</span></b></span>
+              <span class="label-bottom0 label-bottom0-right2"><b><span class="red-word">&asymp; GT motion</span></b></span>
+            </div>
+
+        </div>
 
 
 
-  <div class="video-container">
-    <div class="image-item">
-      <div class="text-container"><b>Conditional Image</b></div>
-      <img src="static/videos/project_page_part1/concat/img.png" alt="Image">
-      
-    </div>
-    <div class="video-item">
-      <div class="text-container"><b>Ground Truth Video</b></div>
-      <video controls autoplay muted loop playsinline>
-        <source src="static/videos/project_page_part1/concat/gt.mp4" type="video/mp4">
-      </video>
-      
-    </div>
-    <div class="video-item">
-      <div class="text-container"><b>X<sub>0</sub> Prediction of Finetuend DynamiCrafter Using Our TimeNoise</div>
-      <video controls autoplay muted loop playsinline>
-        <source src="static/videos/project_page_part1/concat/ours.mp4" type="video/mp4">
-      </video>
-      <div class="text-container"><b>&nbsp;&nbsp;&nbsp;M=0.7T&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=0.95T &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M=T</b> </div>
-      <p class="caption">
-        <b><span class="red-word">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&asymp;GT motion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&asymp; GT motion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&asymp; GT motion</span></b>
-      </p>
-    </div>
+      <br>
+      <br>
+
   </div>
 </section>
-
-
 
 
 
@@ -222,38 +294,49 @@
       <h2 class="title is-3">Inference Strategy</h2>
       <br>
       <br>
+      <br>
+      <br>
     </div>
 
 
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DynamiCrafter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
-          
-          <div class="video-container">
+        
+       <div class="video-container container">
             <div class="video-item">
-              <video controls autoplay muted loop playsinline>
+              <video controls autoplay muted loop>
                 <source src="static/videos/project_page_part2/DC/original/55_sample0.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">DynamiCrafter</span>
+              <span class="label-top label-top-right">+ Our Inference Strategy</span>
+              <p class="caption">
+                <b>A kitten lying on the bed.</b>
+              </p>
+              <br>
             </div>
 
-          </div>
+        </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/DC/original/15_sample0.mp4" type="video/mp4">
             </video>
-            
+            <p class="caption">
+              <b>A duck swimming in the lake.</b>
+            </p>        <br>
           </div>
         </div>
 
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/DC/original/35_sample0.mp4" type="video/mp4">
             </video>
-            
+            <p class="caption">
+              <b>A girl walks up the steps of a palace.</b>
+            </p>        <br>
           </div>
 
         </div>
@@ -261,31 +344,40 @@
         <br>
 
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VideoCrafter1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/VC/original/13.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">VideoCrafter1</span>
+              <span class="label-top label-top-right">+ Our Inference Strategy</span>
+              <p class="caption">
+                <b>The sun sets on the horizon, casting a golden glow over the turbulent sea.</b>
+              </p>        <br>
             </div>
           </div>
 
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/VC/original/64.mp4" type="video/mp4">
               </video>
-              
+              <p class="caption">
+                <b>A duck swimming in the lake.</b>
+              </p>        <br>
             </div>
 
           </div>
 
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/VC/original/A fawn Pembroke Welsh Corgi walking in slow-motion in Times Square, in cubist painting style..mp4" type="video/mp4">
             </video>
+            <p class="caption">
+              <b>A fawn Pembroke Welsh Corgi walking in slow-motion in Times Square, in cubist painting style.</b>
+            </p>        <br>
             
           </div>
 
@@ -294,17 +386,19 @@
         <br>
         <br>
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SVD  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
-          <div class="video-container">
+        
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/SVD/original/3.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">SVD</span>
+              <span class="label-top label-top-right">+ Our Inference Strategy</span>
             </div>
           </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/SVD/original/43.mp4" type="video/mp4">
@@ -313,7 +407,7 @@
           </div>
         </div>
 
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/SVD/original/65.mp4" type="video/mp4">
@@ -326,33 +420,42 @@
 
         <br>
         <br>
-          <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  DynamiCrafter-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
-          <div class="video-container">
+          <!-- 4 DEMOs -->
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/DC/baseline/14_sample0.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">DynamiCrafter-finetune</span>
+              <span class="label-top label-top-right">+ Our Inference Strategy</span>
+              <p class="caption">
+                <b>A duck swimming in the lake.</b>
+              </p>        <br>
             </div>
           </div>
 
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/DC/baseline/30_sample0.mp4" type="video/mp4">
               </video>
+              <p class="caption">
+                <b>A soldier riding a horse.</b>
+              </p>        <br>
               
             </div>
 
           </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/DC/baseline/52_sample0.mp4" type="video/mp4">
             </video>
-            
+            <p class="caption">
+              <b>Fireworks exploding in the sky.</b>
+            </p>        <br>
           </div>
         </div>
 
@@ -360,32 +463,40 @@
         <br>
         <br>
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VideoCrafter1-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/VC/baseline/5.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">VideoCrafter1-finetune</span>
+              <span class="label-top label-top-right">+ Our Inference Strategy</span>
+              <p class="caption">
+                <b>A cartoon girl with brown curly hair splashes joyfully in a bubble-filled bathtub.</b>
+              </p>        <br>
             </div>
           </div>
 
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/VC/baseline/18.mp4" type="video/mp4">
               </video>
-              
+              <p class="caption">
+                <b>A man riding motor on a mountain road.</b>
+              </p>        <br>
             </div>
 
           </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/VC/baseline/47.mp4" type="video/mp4">
             </video>
-            
+            <p class="caption">
+              <b>A plate full of food, with camera spinning.</b>
+            </p>        <br>
           </div>
         </div>
     
@@ -393,19 +504,20 @@
         <br>
 
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; SVD-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Inference Strategy</h2>
-
-          <div class="video-container">
+        
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/SVD/baseline/demo.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">SVD-finetune</span>
+              <span class="label-top label-top-right">+ Our Inference Strategy</span>
             </div>
 
           </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/SVD/baseline/A girl with long curly blonde hair and sunglasses, camera pan from left to right.mp4" type="video/mp4">
@@ -414,7 +526,7 @@
           </div>
         </div>
 
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/SVD/baseline/A panda wearing sunglasses walking in slow-motion under water, in photorealistic style.mp4" type="video/mp4">
@@ -433,36 +545,46 @@
       <h2 class="title is-3">Training Strategy</h2>
       <br>
       <br>
+      <br>
+      <br>
     </div>
 
 
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DynamiCrafter-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Training Strategy</h2>
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/DC/train/7_sample0.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">DynamiCrafter-finetune</span>
+              <span class="label-top label-top-right">+ Our Training Strategy</span>
+              <p class="caption">
+                <b>Donkeys in traditional attire gallop across a lush green meadow.</b>
+              </p>        <br>
             </div>
           </div>
 
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/DC/train/32_sample0.mp4" type="video/mp4">
               </video>
-              
+              <p class="caption">
+                <b>Mountains under the starlight.</b>
+              </p>        <br>
             </div>
 
           </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/DC/train/41_sample0.mp4" type="video/mp4">
             </video>
-            
+            <p class="caption">
+              <b>Rabbits playing in a river.</b>
+            </p>        <br>
           </div>
         </div>
 
@@ -470,32 +592,41 @@
         <br>
 
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VideoCrafter1-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Training Strategy</h2>
-          <div class="video-container">
+        
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/VC/train/25.mp4" type="video/mp4">
               </video>
-              
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">VideoCrafter-finetune</span>
+              <span class="label-top label-top-right">+ Our Training Strategy</span>
+              <p class="caption">
+                <b>A couple hugging a cat.</b>
+              </p>        <br>
             </div>
           </div>
 
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/VC/train/29.mp4" type="video/mp4">
               </video>
-              
+              <p class="caption">
+                <b>Mystical hills with a glowing blue portal.</b>
+              </p>        <br>
             </div>
 
           </div>
         
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/VC/train/36.mp4" type="video/mp4">
             </video>
-            
+            <p class="caption">
+              <b>A woman with flowing, curly silver hair and dark eyes.</b>
+            </p>        <br>
           </div>
         </div>
         <br>
@@ -503,33 +634,35 @@
     
 
           <!-- 4 DEMOs --> 
-          <h2 class="title is-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; SVD-finetune &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Our Training Strategy</h2>
-          <div class="video-container">
+        
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/SVD/train/4.mp4" type="video/mp4">
               </video>
-              
-            </div>
+              <span class="label-top label-top-left">Conditional Image</span>
+              <span class="label-top label-top-middle">SVD-finetune</span>
+              <span class="label-top label-top-right">+ Our Training Strategy</span>
+            </div>        <br>
           </div>
 
-          <div class="video-container">
+          <div class="video-container container">
             <div class="video-item">
               <video controls autoplay muted loop playsinline>
                 <source src="static/videos/project_page_part2/SVD/train/11.mp4" type="video/mp4">
               </video>
               
-            </div>
+            </div>        <br>
 
           </div>
 
-        <div class="video-container">
+        <div class="video-container container">
           <div class="video-item">
             <video controls autoplay muted loop playsinline>
               <source src="static/videos/project_page_part2/SVD/train/46.mp4" type="video/mp4">
             </video>
             
-          </div>
+          </div>        <br>
 
         </div>
     </div>
